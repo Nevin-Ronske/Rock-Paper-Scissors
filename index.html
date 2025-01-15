@@ -9,101 +9,111 @@
 </head>
 
 <body>
-    <h3>Open Inspect element and go to console to play then restart to bring prompt up </h3>
+
     <!-- Title of the Game -->
     <h1>Rock Paper & Scissors</h1>
+    <div id="answers">
+    <div id="computer">
+        <h2>Computer Answer</h2>
+        <div id="output"></div>
+        </div>
 
-    <!-- Placeholder Paragraph -->
-    <p id="Hello"></p>
+        <div id="human">
+            <h2>Human Choice</h2>
+            <div id="input"></div>
+            </div>
+        </div>
+        <div class="humanChoice">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissor">Scissor</button>
+        </div>
 
-    <script>
-        // ------------------------------
-        // Function for Computer's Choice
-        // ------------------------------
-        // Generates a random choice for the computer: "rock", "paper", or "scissor"
-        function getComputerChoice() {
-            let computedAnswer = Math.floor(Math.random() * 3 + 1);
-            if (computedAnswer === 1) {
-                return "rock";
-            } else if (computedAnswer === 2) {
-                return "paper";
-            } else if (computedAnswer === 3) {
-                return "scissor";
-            }
-        }
+        <div id="playedRound"></div>
+        <!-- Placeholder Paragraph -->
+        <p id="Hello"></p>
+        <div id="img">
+            <img class="one" src="https://image.spreadshirtmedia.com/image-server/v1/products/T1459A839PA3861PT28D1044278544W8750H10000/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/classic-standoff-funny-rock-paper-scissors-meme-sticker.jpg" alt="">
+            <br>
+            <img class="two" src="https://images3.memedroid.com/images/UPLOADED883/594cfceb956d8.jpeg" alt="">
+            <br>
+            <img class="three" src="https://images7.memedroid.com/images/UPLOADED630/605e10340a0e2.jpeg" alt="">
+        </div>
 
-        // ----------------------------
-        // Function for Human's Choice
-        // ----------------------------
-        // Prompts the user to select "Rock", "Paper", or "Scissor"
-        // Ensures the input is valid and returns the normalized choice
-        function getHumanChoice() {
-            while (true) {
-                let humanAnswer = prompt(" Click cancel to see instructions --- Choose Rock, Paper, or Scissor:").trim().toLowerCase();
-                if (["rock", "paper", "scissor"].includes(humanAnswer)) {
-                    return humanAnswer;
+        <script>
+
+            function getComputerChoice() {
+                let computedAnswer = Math.floor(Math.random() * 3 + 1);
+                if (computedAnswer === 1) {
+                    return "rock";
+                } else if (computedAnswer === 2) {
+                    return "paper";
+                } else if (computedAnswer === 3) {
+                    return "scissor";
                 }
-                // Alert user for invalid input
-                alert("Invalid choice! Please enter Rock, Paper, or Scissor.");
-            }
-        }
-
-        // --------------------------
-        // Function to Play One Round
-        // --------------------------
-        // Compares the human's choice and the computer's choice
-        // Determines the winner or if it is a tie
-        function playRound(humanAnswer, computedAnswer) {
-            let playedRound = "We could not find a winner"; // Default message
-
-            // Game logic to determine the outcome
-            if (humanAnswer === computedAnswer) {
-                playedRound = "That is a tie, try again next time";
-            } else if (humanAnswer === "scissor" && computedAnswer === "paper") {
-                playedRound = "You Win!! You cut that paper"; humanScore++;
-            } else if (humanAnswer === "scissor" && computedAnswer === "rock") {
-                playedRound = "You Lose!! Rock broke your scissors"; computerScore++;
-            } else if (humanAnswer === "paper" && computedAnswer === "rock") {
-                playedRound = "You Win!! You covered that rock and smothered it"; humanScore++;
-            } else if (humanAnswer === "paper" && computedAnswer === "scissor") {
-                playedRound = "You Lose!! Scissors cut you up"; computerScore++;
-            } else if (humanAnswer === "rock" && computedAnswer === "scissor") {
-                playedRound = "You Win!! You broke those scissors apart"; humanScore++;
-            } else if (humanAnswer === "rock" && computedAnswer === "paper") {
-                playedRound = "You Lose!! You got smothered by paper"; computerScore++;
             }
 
-            // Log the results to the console
-            console.log(`Human: ${humanAnswer.charAt(0).toUpperCase() + humanAnswer.slice(1)}, Computer: ${computedAnswer.charAt(0).toUpperCase() + computedAnswer.slice(1)}`);
-            console.log(playedRound);
-            console.log(`Scores -> Human: ${humanScore}, Computer: ${computerScore}`);
-            return playedRound; // Return the result
+            function playRound(humanAnswer, computedAnswer) {
+                let playedRound = "We could not find a winner"; // Default message
 
-        }
-        // ----------------------
-        // Main Game Logic
-        // ----------------------
-        function playGame() {
-            while (humanScore < 3 && computerScore < 3) {
-                const humanSelection = getHumanChoice(); // Get human's choice
-                const computerSelection = getComputerChoice(); // Get computer's choice
-                playRound(humanSelection, computerSelection); // Play one round
-            }
+                // Game logic to determine the outcome
+                if (humanAnswer === computedAnswer) {
+                    playedRound = "That is a tie, try again next time";
+                } else if (humanAnswer === "scissor" && computedAnswer === "paper") {
+                    playedRound = "You Win!! You cut that paper"; humanScore++;
+                } else if (humanAnswer === "scissor" && computedAnswer === "rock") {
+                    playedRound = "You Lose!! Rock broke your scissors"; computerScore++;
+                } else if (humanAnswer === "paper" && computedAnswer === "rock") {
+                    playedRound = "You Win!! You covered that rock and smothered it"; humanScore++;
+                } else if (humanAnswer === "paper" && computedAnswer === "scissor") {
+                    playedRound = "You Lose!! Scissors cut you up"; computerScore++;
+                } else if (humanAnswer === "rock" && computedAnswer === "scissor") {
+                    playedRound = "You Win!! You broke those scissors apart"; humanScore++;
+                } else if (humanAnswer === "rock" && computedAnswer === "paper") {
+                    playedRound = "You Lose!! You got smothered by paper"; computerScore++;
+                }
+                document.getElementById("output").textContent = computedAnswer.charAt(0).toUpperCase() + computedAnswer.slice(1);
 
-            if (humanScore === 3) {
-                console.log("Congratulations! You are the winner!");
+                document.getElementById("playedRound").textContent = `${playedRound} (Human: ${humanScore}, Computer: ${computerScore})`
+                if (humanScore === 3) {
+                alert("Congratulations! You are the winner!");
+                resetGame();
             } else if (computerScore === 3) {
-                console.log("Computer wins! Better luck next time.");
+                alert("Computer wins! Better luck next time.");
+                resetGame();
             }
         }
 
-        // Initialize Scores
-        let humanScore = 0;
-        let computerScore = 0;
+        // Function to Reset the Game
+        function resetGame() {
+            humanScore = 0;
+            computerScore = 0;
+            document.getElementById("playedRound").textContent = "";
+            document.getElementById("output").textContent = "";
+            document.getElementById("input").textContent = "";
+        }
+            
+            function getHumanChoice() {
+                const buttons = document.querySelectorAll(".humanChoice button")
+                buttons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        humanAnswer = button.id
+                        document.getElementById("input").textContent = humanAnswer.charAt(0).toUpperCase() + humanAnswer.slice(1);
+                        const computedAnswer = getComputerChoice()
+                        playRound(humanAnswer, computedAnswer)
+                    });
+                })
+            }
 
-        // Start the Game
-        playGame();
-    </script>
+        
+            // Initialize Scores
+            let humanScore = 0;
+            let computerScore = 0;
+            let humanAnswer = "";
+
+            // Start the Game
+            getHumanChoice()
+        </script>
 </body>
 
 </html>
